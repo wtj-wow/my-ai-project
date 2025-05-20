@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>會考數學級距計算器</title>
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      background: #f3f3ff;
+      padding: 40px;
+      color: #333;
+    }
+    h1 {
+      color: #4a6fa5;
+    }
+    label, input, button {
+      font-size: 1.2em;
+      margin: 10px 0;
+      display: block;
+    }
+    input {
+      width: 100px;
+      padding: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4a6fa5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.3em;
+    }
+  </style>
+</head>
+<body>
+  <h1>會考數學級距計算器</h1>
+  <label for="choice">選擇題答對題數（0 ~ 25）</label>
+  <input type="number" id="choice" min="0" max="25">
+
+  <label for="nonChoice">非選題級分（0 ~ 6）</label>
+  <input type="number" id="nonChoice" min="0" max="6">
+
+  <button onclick="calculate()">計算級距！</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculate() {
+      const choice = Number(document.getElementById("choice").value);
+      const nonChoice = Number(document.getElementById("nonChoice").value);
+      const resultDiv = document.getElementById("result");
+
+      // 防呆處理
+      if (isNaN(choice) || isNaN(nonChoice)) {
+        resultDiv.innerHTML = "請輸入有效數字喔 📌";
+        return;
+      }
+
+      if (choice < 0 || choice > 25) {
+        resultDiv.innerHTML = "選擇題題數必須在 0 ~ 25 之間 📏";
+        return;
+      }
+
+      if (nonChoice < 0 || nonChoice > 6) {
+        resultDiv.innerHTML = "非選題級分必須在 0 ~ 6 之間 🧠";
+        return;
+      }
+
+      const score = choice * 2.5 + nonChoice * 3.5;
+      let level = "";
+
+      if (score >= 93.2) level = "A++";
+      else if (score >= 86.4) level = "A+";
+      else if (score >= 76.4) level = "A";
+      else if (score >= 66.2) level = "B++";
+      else if (score >= 56.9) level = "B+";
+      else if (score >= 38.1) level = "B";
+      else level = "C";
+
+      resultDiv.innerHTML = `加權分數：<strong>${score.toFixed(2)}</strong>，級距：<strong>${level}</strong><br><br>🌟 小提醒：你不是被分數定義的人，而是用努力定義分數的那個狠角色！`;
+    }
+  </script>
+</body>
+</html>
